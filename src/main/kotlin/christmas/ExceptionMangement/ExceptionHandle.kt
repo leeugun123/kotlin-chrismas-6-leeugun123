@@ -25,7 +25,14 @@ object ExceptionHandle {
         require(searchBeverage()){ONLY_ORDER_BEVERAGE}
     }
 
+    fun checkExcessOrderCount(){
+        require(searchCount()){EXCESS_ORDER_COUNT}
+    }
 
+
+    private fun searchCount(): Boolean {
+        return UserInputData.menuMap.values.sum() <= 20
+    }
 
 
     private fun searchBeverage(): Boolean {
