@@ -17,6 +17,7 @@ object ExceptionHandle {
         require(checkValidDate(date)){ INVALID_FORMAT}
         require(checkDateInRange(date)){ WRONG_DATE}
     }
+
     fun checkMenuInput(menuOrder : String){
         require(checkValidMenuFormat(menuOrder) && checkMenuAll(menuOrder)) { INVALID_MENU_ORDER}
     }
@@ -29,7 +30,6 @@ object ExceptionHandle {
         require(searchCount()){EXCESS_ORDER_COUNT}
     }
 
-
     private fun searchCount(): Boolean {
         return UserInputData.menuMap.values.sum() <= 20
     }
@@ -38,6 +38,7 @@ object ExceptionHandle {
     private fun searchBeverage(): Boolean {
         return UserInputData.menuMap.keys.any { it !in MenuPrice.beverageMap }
     }
+
 
 
     private fun checkMenuAll(menuOrder: String): Boolean {
@@ -55,6 +56,7 @@ object ExceptionHandle {
         return true
     }
 
+
     private fun checkExistMenu(menu: String) = menu in MenuPrice.appetizerMap + MenuPrice.mainMap + MenuPrice.dessertMap + MenuPrice.beverageMap
 
     private fun checkValidDate(date : String) = date.toIntOrNull() != null
@@ -62,5 +64,8 @@ object ExceptionHandle {
     private fun checkDateInRange(date : String) = date.toInt() in 1..31
 
     private fun checkValidMenuFormat(menu : String) : Boolean = Regex("""^[a-zA-Z가-힣]+\-\d+(,[a-zA-Z가-힣]+\-\d+)*$""").matches(menu)
+
+
+
 
 }

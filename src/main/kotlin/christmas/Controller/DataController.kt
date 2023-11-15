@@ -11,8 +11,13 @@ class DataController {
 
         calBeforeTotalMoney()
         calProvideMenu()
+
         if(10000 <= UserInputData.beforeTotalMoney)
             calBenefitContent()
+
+        calTotalDiscount()
+        calExpectMoney()
+        calBadge()
 
     }//데이터 분석 및 처리
 
@@ -36,10 +41,12 @@ class DataController {
             MenuPrice.beverageMap[name])!!
     }
 
+
     private fun calProvideMenu() {
         if(UserInputData.beforeTotalMoney >= 120000)
             UserInputData.provideMenu = "샴페인 1개"
     }
+
 
     private fun calBenefitContent() {
 
@@ -52,6 +59,7 @@ class DataController {
         if(discountCheck())
             discountConcat()//할인 합치기
     }
+
 
     private fun calDdayDiscount() {
 
@@ -159,6 +167,8 @@ class DataController {
             UserInputData.expectMoney += 25000
     }
 
+
+
     private fun calBadge() {
 
         UserInputData.badge = when {
@@ -169,6 +179,7 @@ class DataController {
         }
 
     }
+
 
 
 }
