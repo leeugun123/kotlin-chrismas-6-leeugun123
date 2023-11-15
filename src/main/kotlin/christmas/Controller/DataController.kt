@@ -11,6 +11,8 @@ class DataController {
 
         calBeforeTotalMoney()
         calProvideMenu()
+        if(10000 <= UserInputData.beforeTotalMoney)
+            calBenefitContent()
 
     }//데이터 분석 및 처리
 
@@ -39,6 +41,110 @@ class DataController {
             UserInputData.provideMenu = "샴페인 1개"
     }
 
+    private fun calBenefitContent() {
+
+        calDdayDiscount()//디데이 할인
+        calWeekDayDiscount()//평일 할인
+        calWeekendDayDiscount()//주말 할인
+        calSpecialDiscount()//특별 할인
+        calProvideDiscount()//증정 할인
+
+        if(discountCheck())
+            discountConcat()//할인 합치기
+    }
+
+    private fun calDdayDiscount() {
+
+        if(UserInputData.inputDate in 1..25){
+            UserInputData.dDayDiscount = 1000 + (UserInputData.inputDate - 1) * 100
+        }
+
+    }
+
+    private fun calWeekDayDiscount() {
+
+        val inputDate = UserInputData.inputDate
+        val datePatterns = listOf(3, 10, 17, 24, 31)
+
+        if (inputDate in datePatterns.flatMap { it..it+4 }) {
+            dessertSearch()
+        }
+
+    }
+
+    private fun dessertSearch() {
+
+        UserInputData.weekDiscount += UserInputData.menuMap
+            .filterKeys { MenuPrice.dessertMap.containsKey(it) }
+            .values
+            .sum() * 2023
+
+    }
+
+    private fun calWeekendDayDiscount() {
+
+        val inputDate = UserInputData.inputDate
+        val datePatterns = listOf(1, 8 , 15, 22, 29)
+
+        if (inputDate in datePatterns.flatMap { it..it+1 }) {
+            mainMenuSearch()
+        }
+
+    }
+
+    private fun mainMenuSearch() {
+
+        UserInputData.weekendDiscount += UserInputData.menuMap
+            .filterKeys { MenuPrice.mainMap.containsKey(it) }
+            .values
+            .sum() * 2023
+
+    }
+
+    private fun calSpecialDiscount() {
+
+        val inputDate = UserInputData.inputDate
+        val datePatterns = listOf(3, 10 , 17, 24, 25, 31)
+
+        if(inputDate in datePatterns){
+            UserInputData.specialDiscount = 1000
+        }
+
+
+    }
+
+    private fun calProvideDiscount() {
+        if(UserInputData.provideMenu != "없음")
+            UserInputData.provideEventDiscount = 25000
+    }
+
+
+    private fun discountCheck(): Boolean {
+        return UserInputData.dDayDiscount != 0 ||
+                UserInputData.weekDiscount != 0 ||
+                UserInputData.weekendDiscount != 0 ||
+                UserInputData.specialDiscount != 0 ||
+                UserInputData.provideEventDiscount != 0
+    }
+
+
+    private fun discountConcat() {
+
+        UserInputData.benefitContent = buildString {
+            appendDiscount("크리스마스 디데이 할인", UserInputData.dDayDiscount)
+            appendDiscount("평일 할인", UserInputData.weekDiscount)
+            appendDiscount("주말 할인", UserInputData.weekendDiscount)
+            appendDiscount("특별 할인", UserInputData.specialDiscount)
+            appendDiscount("증정 이벤트", UserInputData.provideEventDiscount)
+        }
+
+    }
+
+    private fun StringBuilder.appendDiscount(title: String, discountAmount: Int) {
+        if (discountAmount != 0) {
+            append("$title: -${Parsing.plusCommaMoney(discountAmount)}원\n")
+        }
+    }
 
 
 
