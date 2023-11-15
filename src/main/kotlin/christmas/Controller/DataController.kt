@@ -151,6 +151,14 @@ class DataController {
                 UserInputData.provideEventDiscount
     }
 
+    private fun calExpectMoney() {
+
+        UserInputData.expectMoney = UserInputData.beforeTotalMoney - UserInputData.benefitMoney
+
+        if(UserInputData.provideMenu != "없음")
+            UserInputData.expectMoney += 25000
+    }
+
 
 
 }
