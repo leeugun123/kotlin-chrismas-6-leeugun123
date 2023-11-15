@@ -17,12 +17,32 @@ object ExceptionHandle {
         require(checkValidDate(date)){ INVALID_FORMAT}
         require(checkDateInRange(date)){ WRONG_DATE}
     }
+    fun checkMenuInput(menuOrder : String){
+        require(checkValidMenuFormat(menuOrder) && checkMenuAll(menuOrder)) { INVALID_MENU_ORDER}
+    }
 
+
+    private fun checkMenuAll(menuOrder: String): Boolean {
+        val uniqueMenus = HashSet<String>()
+
+        for (entry in menuOrder.split(",")) {
+            val (menu, countStr) = entry.split("-")
+            val count = countStr.toInt()
+
+            if (count <= 0 || !uniqueMenus.add(menu) || !checkExistMenu(menu)) {
+                return false
+            }
+
+        }
+        return true
+    }
+
+    private fun checkExistMenu(menu: String) = menu in MenuPrice.appetizerMap + MenuPrice.mainMap + MenuPrice.dessertMap + MenuPrice.beverageMap
 
     private fun checkValidDate(date : String) = date.toIntOrNull() != null
 
     private fun checkDateInRange(date : String) = date.toInt() in 1..31
 
-
+    private fun checkValidMenuFormat(menu : String) : Boolean = Regex("""^[a-zA-Z가-힣]+\-\d+(,[a-zA-Z가-힣]+\-\d+)*$""").matches(menu)
 
 }
