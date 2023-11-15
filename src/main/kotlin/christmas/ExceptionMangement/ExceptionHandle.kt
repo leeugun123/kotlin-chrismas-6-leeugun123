@@ -21,6 +21,17 @@ object ExceptionHandle {
         require(checkValidMenuFormat(menuOrder) && checkMenuAll(menuOrder)) { INVALID_MENU_ORDER}
     }
 
+    fun checkOnlyBeverage(){
+        require(searchBeverage()){ONLY_ORDER_BEVERAGE}
+    }
+
+
+
+
+    private fun searchBeverage(): Boolean {
+        return UserInputData.menuMap.keys.any { it !in MenuPrice.beverageMap }
+    }
+
 
     private fun checkMenuAll(menuOrder: String): Boolean {
         val uniqueMenus = HashSet<String>()
