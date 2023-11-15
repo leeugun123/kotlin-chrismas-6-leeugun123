@@ -146,6 +146,11 @@ class DataController {
         }
     }
 
+    private fun calTotalDiscount() {
+        UserInputData.benefitMoney =  UserInputData.dDayDiscount + UserInputData.weekendDiscount + UserInputData.weekDiscount + UserInputData.specialDiscount +
+                UserInputData.provideEventDiscount
+    }
+
 
 
 }
