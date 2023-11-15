@@ -159,6 +159,16 @@ class DataController {
             UserInputData.expectMoney += 25000
     }
 
+    private fun calBadge() {
+
+        UserInputData.badge = when {
+            UserInputData.benefitMoney in 5000..< 10000 -> "별"
+            UserInputData.benefitMoney in 10000..<20000 -> "트리"
+            UserInputData.benefitMoney >= 20000 -> "산타"
+            else -> "없음"
+        }
+
+    }
 
 
 }
