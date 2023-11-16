@@ -6,7 +6,7 @@ class OrderUI {
         DataController().analysisData()
         OutputView().outputStart()
 
-        //테스트
+
     }
 
 }
