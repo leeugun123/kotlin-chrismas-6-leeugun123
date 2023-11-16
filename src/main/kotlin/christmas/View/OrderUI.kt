@@ -5,6 +5,8 @@ class OrderUI {
         InputView().readInfo()
         DataController().analysisData()
         OutputView().outputStart()
+
+        //
     }
 
 }
